@@ -58,7 +58,19 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        movementInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        if (Input.GetMouseButton(0))
+        {
+            itemHolder.UpdateEquipped(true);
+            itemHolder.equippedItem.rotation = Quaternion.Euler(0, 0, Mathf.Sin(Time.time * 20) * 20);
+            movementInput = Vector2.zero;
+        }
+        else
+        {
+            itemHolder.UpdateEquipped(false);
+            itemHolder.equippedItem.rotation = Quaternion.identity;
+            movementInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        }
+
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -71,16 +83,7 @@ public class PlayerController : MonoBehaviour
             facingDir = movementInput.normalized;
         }
 
-        if (Input.GetMouseButton(0))
-        {
-            itemHolder.UpdateEquipped(true);
-            itemHolder.equippedItem.rotation = Quaternion.Euler(0, 0, Mathf.Sin(Time.time * 20) * 20);
-        }
-        else
-        {
-            itemHolder.UpdateEquipped(false);
-            itemHolder.equippedItem.rotation = Quaternion.identity;
-        }
+
 
         UpdateSpriteFacing();
         // Rotate() is removed to avoid continuous rotation; sprite handling replaces it

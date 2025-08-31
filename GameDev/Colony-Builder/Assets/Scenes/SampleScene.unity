@@ -129,6 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 145139638}
   - component: {fileID: 145139637}
+  - component: {fileID: 145139640}
   - component: {fileID: 145139636}
   - component: {fileID: 145139639}
   m_Layer: 0
@@ -268,6 +269,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   outlineThickness: 10
+--- !u!114 &145139640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 145139635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04b6ee328db77c349b4abca387eda40e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  breakTime: 2
 --- !u!1 &225958350
 GameObject:
   m_ObjectHideFlags: 0
@@ -284,7 +298,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &225958351
 Transform:
   m_ObjectHideFlags: 0
@@ -346,7 +360,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: -5825250732961213246, guid: 91cd7bf203046d34c96cacdf744af81f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 6.84, y: 4.98}
@@ -721,8 +735,6 @@ MonoBehaviour:
   forwardSprite: {fileID: 1241100887548063777, guid: e3db9bd1f6f885646a93bf7d80984df2, type: 3}
   leftSprite: {fileID: -2190685502841632218, guid: e3db9bd1f6f885646a93bf7d80984df2, type: 3}
   backSprite: {fileID: 7646531256951936728, guid: e3db9bd1f6f885646a93bf7d80984df2, type: 3}
-  equipped: {fileID: 0}
-  equippedOffset: {x: 0, y: 0}
 --- !u!212 &1952881333
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -879,12 +891,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 663e61a8a79d9e241b5471e46395ddab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  equippedItem: {fileID: 0}
+  equippedItem: {fileID: 225958351}
   offsetDown: {x: 0, y: 0}
   offsetUp: {x: 0, y: 0}
   offsetLeft: {x: -0.436, y: -0.219}
   offsetRight: {x: 0.436, y: -0.219}
-  currentDirection: 3
+  currentDirection: 2
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
