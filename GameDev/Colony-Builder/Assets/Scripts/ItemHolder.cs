@@ -4,7 +4,7 @@ public enum Direction { Down, Up, Left, Right } // Add more if needed, e.g., dia
 
 public class ItemHolder : MonoBehaviour
 {
-    [SerializeField] private Transform equippedItem; // Reference to the item's Transform
+    [SerializeField] public Transform equippedItem; // Reference to the item's Transform
     [SerializeField] private Vector2 offsetDown = new Vector2(0.5f, 0f); // Example defaults
     [SerializeField] private Vector2 offsetUp = new Vector2(0.5f, 0.5f);
     [SerializeField] private Vector2 offsetLeft = new Vector2(-0.5f, 0f);
@@ -13,7 +13,9 @@ public class ItemHolder : MonoBehaviour
     [SerializeField]
     private Direction currentDirection = Direction.Down; // Track current direction
 
-    private void OnDrawGizmos()
+    private bool equipped = false;
+
+    private void OnDrawGizmosSelected()
     {
         // Approach 1: Draw offsets as spheres
         Gizmos.color = Color.green;
@@ -34,13 +36,19 @@ public class ItemHolder : MonoBehaviour
         }        
     }
 
+    public void UpdateEquipped(bool isEquipped)
+    {
+        equipped = isEquipped;
+        equippedItem.gameObject.SetActive(equipped);
+    }
+
     // Call this when direction changes (e.g., from input or animator)
     public void UpdateHoldPosition(Direction newDirection)
     {
         currentDirection = newDirection;
         Vector2 offset = GetOffsetForDirection();
 
-        equippedItem.localPosition = offset;
+        equippedItem.localPosition = new Vector3(offset.x, offset.y, equippedItem.localPosition.z );
 
         // Handle flipping for left/right if your character doesn't auto-flip the item
         if (currentDirection == Direction.Left)

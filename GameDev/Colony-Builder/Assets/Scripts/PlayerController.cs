@@ -20,8 +20,7 @@ public class PlayerController : MonoBehaviour
     public Sprite leftSprite;    // Sprite for facing left (flip for right)
     public Sprite backSprite;    // Sprite for facing upwards (backwards)
 
-    public GameObject equipped;
-    public Vector2 equippedOffset;
+    private ItemHolder itemHolder;
 
     public Vector2 Velocity { get { return rb.linearVelocity; } }
 
@@ -52,6 +51,9 @@ public class PlayerController : MonoBehaviour
         {
             gameObject.AddComponent<BoxCollider2D>();
         }
+
+        itemHolder = GetComponent<ItemHolder>();
+        
     }
 
     private void Update()
@@ -71,11 +73,13 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetMouseButton(0))
         {
-            gameObject.SetActive(true);
+            itemHolder.UpdateEquipped(true);
+            itemHolder.equippedItem.rotation = Quaternion.Euler(0, 0, Mathf.Sin(Time.time * 20) * 20);
         }
         else
         {
-            gameObject.SetActive(false);
+            itemHolder.UpdateEquipped(false);
+            itemHolder.equippedItem.rotation = Quaternion.identity;
         }
 
         UpdateSpriteFacing();
@@ -121,6 +125,9 @@ public class PlayerController : MonoBehaviour
             // Horizontal facing (left or right)
             sr.sprite = leftSprite;
             sr.flipX = facingDir.x > 0; // Flip for right if x > 0 (assuming leftSprite faces left)
+            
+            if(sr.flipX) itemHolder.UpdateHoldPosition(Direction.Right);
+            else itemHolder.UpdateHoldPosition(Direction.Left);
         }
         else
         {
