@@ -1,0 +1,148 @@
+using System.Globalization;
+using UnityEngine;
+
+[RequireComponent(typeof(Rigidbody2D))]
+public class PlayerController : MonoBehaviour
+{
+    public float speed = 5;
+    public float dash = 10;
+    public float acceleration = 10;
+    public float deceleration = 1;
+    public float rotateSpeed = 10;
+
+    [Range(0, 100)]
+    public float knockbackResistance = 10;
+
+    public bool forwardMovement = false;
+    public bool holdFire = false;
+
+    public Sprite forwardSprite; // Sprite for facing downwards (forward)
+    public Sprite leftSprite;    // Sprite for facing left (flip for right)
+    public Sprite backSprite;    // Sprite for facing upwards (backwards)
+
+    public GameObject equipped;
+    public Vector2 equippedOffset;
+
+    public Vector2 Velocity { get { return rb.linearVelocity; } }
+
+    // Cache 
+    // Shooter shooter;
+
+    private Rigidbody2D rb;
+    private SpriteRenderer sr;
+    private Vector2 movementInput;
+    private bool dashInput;
+    private Vector2 facingDir = Vector2.down; // Default facing forward (down)
+
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        sr = GetComponent<SpriteRenderer>(); // Assume SpriteRenderer is attached
+        if (sr == null)
+        {
+            Debug.LogError("SpriteRenderer component is missing on the player GameObject.");
+        }
+
+        rb.gravityScale = 0f;
+        rb.linearDamping = 0f;
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+
+        // Optionally add a collider if none exists (e.g., for basic collision detection)
+        if (GetComponent<Collider2D>() == null)
+        {
+            gameObject.AddComponent<BoxCollider2D>();
+        }
+    }
+
+    private void Update()
+    {
+        movementInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            dashInput = true;
+        }
+
+        // Update facing direction based on movement input
+        if (movementInput.sqrMagnitude > 0.01f) // Small threshold to avoid noise
+        {
+            facingDir = movementInput.normalized;
+        }
+
+        if (Input.GetMouseButton(0))
+        {
+            gameObject.SetActive(true);
+        }
+        else
+        {
+            gameObject.SetActive(false);
+        }
+
+        UpdateSpriteFacing();
+        // Rotate() is removed to avoid continuous rotation; sprite handling replaces it
+    }
+
+    private void FixedUpdate()
+    {
+        Vector2 targetVelocity = Vector2.zero;
+        float gain = deceleration;
+
+        if (movementInput.sqrMagnitude > 0f)
+        {
+            if (forwardMovement)
+            {
+                targetVelocity = transform.up * movementInput.y + transform.right * movementInput.x;
+            }
+            else
+            {
+                targetVelocity = movementInput;
+            }
+
+            targetVelocity *= speed;
+            gain = acceleration;
+        }
+
+        Vector2 force = (targetVelocity - rb.linearVelocity) * gain * rb.mass;
+        rb.AddForce(force);
+
+        if (dashInput)
+        {
+            rb.AddForce(facingDir * dash * speed, ForceMode2D.Impulse);
+            dashInput = false;
+        }
+    }
+
+    private void UpdateSpriteFacing()
+    {
+        if (sr == null) return;
+
+        if (Mathf.Abs(facingDir.x) > Mathf.Abs(facingDir.y))
+        {
+            // Horizontal facing (left or right)
+            sr.sprite = leftSprite;
+            sr.flipX = facingDir.x > 0; // Flip for right if x > 0 (assuming leftSprite faces left)
+        }
+        else
+        {
+            // Vertical facing (up or down)
+            if (facingDir.y > 0)
+            {
+                sr.sprite = backSprite;
+                sr.flipX = false;
+            }
+            else
+            {
+                sr.sprite = forwardSprite;
+                sr.flipX = false;
+            }
+        }
+    }
+
+    // Removed as sprite facing replaces mouse-based rotation
+    // public void Rotate()
+    // {
+    //     var dir = (Camera.main.ScreenToViewportPoint(Input.mousePosition) - new Vector3(0.5f, 0.5f, 0)).ToVector2();
+    //     var rotation = dir.LookDirection2D();
+    //     transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, rotateSpeed * Time.deltaTime);
+    // }
+}
