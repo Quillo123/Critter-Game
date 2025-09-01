@@ -36,6 +36,15 @@ public class ItemHolder : MonoBehaviour
         }        
     }
 
+    public void SwapEquippedItem(Item item)
+    {
+        equippedItem.gameObject.SetActive(false);
+
+        equippedItem = item.transform;
+        equippedItem.gameObject.SetActive(equipped);
+        UpdateHoldPosition(currentDirection); // Reposition based on current direction
+    }
+    
     public void UpdateEquipped(bool isEquipped)
     {
         equipped = isEquipped;

@@ -2,6 +2,9 @@ using System.Globalization;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(ItemHolder))]
+[RequireComponent(typeof(Inventory))]
+[RequireComponent(typeof(SpriteRenderer))]
 public class PlayerController : MonoBehaviour
 {
     public float speed = 5;
@@ -33,6 +36,9 @@ public class PlayerController : MonoBehaviour
     private bool dashInput;
     private Vector2 facingDir = Vector2.down; // Default facing forward (down)
 
+    private Inventory inventory;
+    private int i_item = 0;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -53,7 +59,8 @@ public class PlayerController : MonoBehaviour
         }
 
         itemHolder = GetComponent<ItemHolder>();
-        
+        inventory = GetComponent<Inventory>();
+
     }
 
     private void Update()
@@ -69,6 +76,17 @@ public class PlayerController : MonoBehaviour
             itemHolder.UpdateEquipped(false);
             itemHolder.equippedItem.rotation = Quaternion.identity;
             movementInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        }
+
+        // Swap items using scroll wheel
+        if(Input.mouseScrollDelta.y > 0 && inventory.items.Count > 0)
+        {
+            i_item++;
+            if (i_item == inventory.items.Count)
+            {
+                i_item = 0;
+            }
+            SwapHeldItem(inventory.items[i_item]);
         }
 
 
@@ -147,6 +165,16 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+
+
+    private void SwapHeldItem(Item item)
+    {
+        if (inventory.HasItem(item))
+        {
+            itemHolder.SwapEquippedItem(item);
+        }
+    }
+
 
     // Removed as sprite facing replaces mouse-based rotation
     // public void Rotate()
