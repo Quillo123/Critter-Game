@@ -38,6 +38,7 @@ public class PlayerController : MonoBehaviour
 
     private Inventory inventory;
     private int i_item = 0;
+    bool equipped = false;
 
     private void Start()
     {
@@ -73,18 +74,35 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            itemHolder.UpdateEquipped(false);
+            itemHolder.UpdateEquipped(equipped);
             itemHolder.equippedItem.rotation = Quaternion.identity;
             movementInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         }
+        
+        
+        if (Input.GetMouseButtonDown(1))
+        {
+            equipped = !equipped;
+        }
 
         // Swap items using scroll wheel
-        if(Input.mouseScrollDelta.y > 0 && inventory.items.Count > 0)
+        if(Input.mouseScrollDelta.y != 0 && inventory.items.Count > 0)
         {
-            i_item++;
-            if (i_item == inventory.items.Count)
+            if (Input.mouseScrollDelta.y > 0)
             {
-                i_item = 0;
+                i_item--;
+                if (i_item < 0)
+                {
+                    i_item = inventory.items.Count - 1;
+                }
+            }
+            else
+            {
+                i_item++;
+                if (i_item == inventory.items.Count)
+                {
+                    i_item = 0;
+                }
             }
             SwapHeldItem(inventory.items[i_item]);
         }

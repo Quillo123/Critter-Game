@@ -13,7 +13,7 @@ public class ItemHolder : MonoBehaviour
     [SerializeField]
     private Direction currentDirection = Direction.Down; // Track current direction
 
-    private bool equipped = false;
+    public bool equipped = false;
 
     private void OnDrawGizmosSelected()
     {
