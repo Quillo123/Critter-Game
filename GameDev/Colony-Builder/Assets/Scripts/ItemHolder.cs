@@ -36,7 +36,7 @@ public class ItemHolder : MonoBehaviour
         }        
     }
 
-    public void SwapEquippedItem(Item item)
+    public void SwapEquippedItem(ItemEntity item)
     {
         equippedItem.gameObject.SetActive(false);
 

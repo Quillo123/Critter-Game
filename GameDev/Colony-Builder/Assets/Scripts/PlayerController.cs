@@ -185,7 +185,7 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    private void SwapHeldItem(Item item)
+    private void SwapHeldItem(ItemEntity item)
     {
         if (inventory.HasItem(item))
         {

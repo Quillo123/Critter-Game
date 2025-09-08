@@ -41,10 +41,10 @@ public class Resource : MonoBehaviour
         foreach (GameObject drop in drops)
         {
             var spawnpos = transform.position + new Vector3(spawnOffset.x, spawnOffset.y, 0f);
-            var item = Instantiate(drop, spawnpos, Quaternion.identity).GetComponent<Rigidbody2D>();
+            var item = Instantiate(drop, spawnpos, Quaternion.identity).GetComponent<SimplePhysicsBody>();
             if (item != null)
             {
-                item.AddForce(Random.insideUnitCircle * 10f, ForceMode2D.Impulse);
+                item.AddForce(Random.insideUnitCircle * 10f);
             }
         }
         Destroy(gameObject);
