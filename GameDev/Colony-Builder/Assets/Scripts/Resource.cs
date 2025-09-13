@@ -14,6 +14,8 @@ public class Resource : MonoBehaviour
 
     public Vector2 spawnOffset = Vector2.zero;
 
+    public float spawnForce = 1;
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.green;
@@ -41,10 +43,10 @@ public class Resource : MonoBehaviour
         foreach (GameObject drop in drops)
         {
             var spawnpos = transform.position + new Vector3(spawnOffset.x, spawnOffset.y, 0f);
-            var item = Instantiate(drop, spawnpos, Quaternion.identity).GetComponent<SimplePhysicsBody>();
+            var item = Instantiate(drop, spawnpos, Quaternion.identity).GetComponent<Rigidbody2D>();
             if (item != null)
             {
-                item.AddForce(Random.insideUnitCircle * 10f);
+                item.AddForce(Random.insideUnitCircle * spawnForce);
             }
         }
         Destroy(gameObject);

@@ -1,19 +1,26 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
-[RequireComponent (typeof(Inventory))]
+[RequireComponent(typeof(Collider2D))]
 public class ItemCollector : MonoBehaviour
 {
-    private Inventory inventory;
+    public Inventory inventory;
 
 
     void Start()
     {
-        inventory = GetComponent<Inventory>();
+        if (!inventory)
+        {
+            inventory = GetComponent<Inventory>();
+            if (!inventory)
+            {
+                inventory = GetComponentInParent<Inventory>();
+            }
+        }
     }
 
     // Collect Item when Collided With
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log("Collecting Item");
        

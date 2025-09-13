@@ -4,7 +4,6 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(ItemHolder))]
 [RequireComponent(typeof(Inventory))]
-[RequireComponent(typeof(SpriteRenderer))]
 public class PlayerController : MonoBehaviour
 {
     public float speed = 5;
@@ -31,7 +30,7 @@ public class PlayerController : MonoBehaviour
     // Shooter shooter;
 
     private Rigidbody2D rb;
-    private SpriteRenderer sr;
+    public SpriteRenderer sr;
     private Vector2 movementInput;
     private bool dashInput;
     private Vector2 facingDir = Vector2.down; // Default facing forward (down)
@@ -43,7 +42,6 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        sr = GetComponent<SpriteRenderer>(); // Assume SpriteRenderer is attached
         if (sr == null)
         {
             Debug.LogError("SpriteRenderer component is missing on the player GameObject.");
