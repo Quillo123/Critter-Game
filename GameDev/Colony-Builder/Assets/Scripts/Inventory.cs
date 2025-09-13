@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    public List<Item> items;
+    public List<ItemEntity> items;
     public int capacity = 20;
 
-    public bool AddItem(Item item)
+    public bool AddItem(ItemEntity item)
     {
         if (items.Count >= capacity)
         {
@@ -19,12 +19,12 @@ public class Inventory : MonoBehaviour
         return true;
     }
 
-    public bool RemoveItem(Item item)
+    public bool RemoveItem(ItemEntity item)
     {
         return items.Remove(item);
     }
 
-    public bool HasItem(Item item)
+    public bool HasItem(ItemEntity item)
     {
         return items.Contains(item);
     }

@@ -14,6 +14,8 @@ public class Resource : MonoBehaviour
 
     public Vector2 spawnOffset = Vector2.zero;
 
+    public float spawnForce = 1;
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.green;
@@ -44,7 +46,7 @@ public class Resource : MonoBehaviour
             var item = Instantiate(drop, spawnpos, Quaternion.identity).GetComponent<Rigidbody2D>();
             if (item != null)
             {
-                item.AddForce(Random.insideUnitCircle * 10f, ForceMode2D.Impulse);
+                item.AddForce(Random.insideUnitCircle * spawnForce);
             }
         }
         Destroy(gameObject);
