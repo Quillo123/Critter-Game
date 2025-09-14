@@ -24,10 +24,10 @@ public class ItemCollector : MonoBehaviour
     {
         Debug.Log("Collecting Item");
        
-        var item = collision.gameObject.GetComponent<ItemEntity>().item;
+        var item = collision.gameObject.GetComponent<ItemEntity>();
         if (item)
         {
-            if (inventory.AddItem(item.itemID, 1) == 1)
+            if (inventory.AddItem(item.item.itemID, 1) == 1)
             {
                 Destroy(collision.gameObject);
             }
