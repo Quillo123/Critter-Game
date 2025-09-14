@@ -30,8 +30,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3.31, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 2.18, y: 2.18, z: 0.7266667}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -104,14 +104,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   breakTime: 2
   drops:
-  - {fileID: 5048182718510735210, guid: 352fcb6c006fe76419488a700e1d6f27, type: 3}
-  - {fileID: 5048182718510735210, guid: 352fcb6c006fe76419488a700e1d6f27, type: 3}
-  - {fileID: 5048182718510735210, guid: 352fcb6c006fe76419488a700e1d6f27, type: 3}
-  - {fileID: 5048182718510735210, guid: 352fcb6c006fe76419488a700e1d6f27, type: 3}
-  - {fileID: 5048182718510735210, guid: 352fcb6c006fe76419488a700e1d6f27, type: 3}
-  - {fileID: 5048182718510735210, guid: 352fcb6c006fe76419488a700e1d6f27, type: 3}
+  - {fileID: 11400000, guid: c845fbb11e82e2d48b584112bcebbb76, type: 2}
+  - {fileID: 11400000, guid: c845fbb11e82e2d48b584112bcebbb76, type: 2}
+  - {fileID: 11400000, guid: c845fbb11e82e2d48b584112bcebbb76, type: 2}
+  - {fileID: 11400000, guid: c845fbb11e82e2d48b584112bcebbb76, type: 2}
+  - {fileID: 11400000, guid: c845fbb11e82e2d48b584112bcebbb76, type: 2}
+  - {fileID: 11400000, guid: c845fbb11e82e2d48b584112bcebbb76, type: 2}
   spawnOffset: {x: 0, y: 0.64}
-  spawnForce: 20
+  spawnForce: 500
 --- !u!61 &2943050513626338070
 BoxCollider2D:
   m_ObjectHideFlags: 0

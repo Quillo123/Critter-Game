@@ -10,7 +10,7 @@ public class Resource : MonoBehaviour
 
     private float startTime = 0;
 
-    public List<GameObject> drops;
+    public List<Item> drops;
 
     public Vector2 spawnOffset = Vector2.zero;
 
@@ -40,13 +40,16 @@ public class Resource : MonoBehaviour
 
     private void DropItemsAndDestroy()
     {
-        foreach (GameObject drop in drops)
+        foreach (Item drop in drops)
         {
             var spawnpos = transform.position + new Vector3(spawnOffset.x, spawnOffset.y, 0f);
-            var item = Instantiate(drop, spawnpos, Quaternion.identity).GetComponent<Rigidbody2D>();
-            if (item != null)
+            var itemE = Instantiate(ItemDatabase.Instance.itemPrefab, spawnpos, Quaternion.identity);
+            itemE.item = drop;
+
+            var itemRB = itemE.GetComponent<Rigidbody2D>();
+            if (itemRB != null)
             {
-                item.AddForce(Random.insideUnitCircle * spawnForce);
+                itemRB.AddForce(Random.insideUnitCircle * spawnForce);
             }
         }
         Destroy(gameObject);

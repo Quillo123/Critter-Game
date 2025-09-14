@@ -4,6 +4,9 @@ public enum Direction { Down, Up, Left, Right } // Add more if needed, e.g., dia
 
 public class ItemHolder : MonoBehaviour
 {
+    ItemDatabase itemDB => ItemDatabase.Instance;
+
+
     [SerializeField] public Transform equippedItem; // Reference to the item's Transform
     [SerializeField] private Vector2 offsetDown = new Vector2(0.5f, 0f); // Example defaults
     [SerializeField] private Vector2 offsetUp = new Vector2(0.5f, 0.5f);
@@ -36,13 +39,22 @@ public class ItemHolder : MonoBehaviour
         }        
     }
 
-    public void SwapEquippedItem(ItemEntity item)
+    public void SwapEquippedItem(string itemID)
     {
-        equippedItem.gameObject.SetActive(false);
+        if(!itemDB.GetItemByID(itemID))
+        {
+            equippedItem.gameObject.SetActive(false);
+        }
+        else
+        {
+            equippedItem.gameObject.SetActive(equipped);
+            equippedItem.GetComponent<ItemEntity>().SetItem(itemID);
+            UpdateHoldPosition(currentDirection); // Reposition based on current direction
 
-        equippedItem = item.transform;
-        equippedItem.gameObject.SetActive(equipped);
-        UpdateHoldPosition(currentDirection); // Reposition based on current direction
+        }
+
+
+
     }
     
     public void UpdateEquipped(bool isEquipped)
