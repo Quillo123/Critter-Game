@@ -23,11 +23,11 @@ public class InventoryUI : MonoBehaviour
 
     private void OnEnable()
     {
+        inventory.OnInventoryChanged += OnInventoryChanged;
+
         // Create the inventory grid when enabled
         CreateInventoryGrid();
         UpdateInventoryUI();
-
-        inventory.OnInventoryChanged += OnInventoryChanged;
     }
 
     private void CreateInventoryGrid()

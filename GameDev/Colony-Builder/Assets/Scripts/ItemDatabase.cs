@@ -27,6 +27,14 @@ public class ItemDatabase : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        if(this == Instance)
+        {
+            Instance = null;
+        }
+    }
+
     void LoadPrefabs()
     {
         itemPrefab = Resources.Load<ItemEntity>("Prefabs/Item");

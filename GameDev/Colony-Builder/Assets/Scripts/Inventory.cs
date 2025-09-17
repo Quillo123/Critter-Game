@@ -35,7 +35,7 @@ public class Inventory : MonoBehaviour
 
     public event Action OnInventoryChanged;
 
-    private void Start()
+    private void OnEnable()
     {
         items = new StoredItem[capacity];
     }
@@ -112,6 +112,7 @@ public class Inventory : MonoBehaviour
             else
             {
                 items[slot].count += itemsLeft;
+                OnInventoryChanged?.Invoke();
                 return count;
             }
 
