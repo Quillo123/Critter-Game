@@ -40,7 +40,7 @@ public class BootstrapManager : MonoBehaviour
                 yield return null; // Wait for the next frame
             }
 
-            Debug.Log("ItemDatabase initialized with " + ItemDatabase.Instance.items.Count + " items.");
+            Logger.Log("ItemDatabase initialized with " + ItemDatabase.Instance.items.Count + " items.", gameObject);
         }
     }
 }

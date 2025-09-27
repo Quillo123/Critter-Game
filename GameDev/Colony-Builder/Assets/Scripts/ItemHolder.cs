@@ -1,3 +1,5 @@
+using Mono.CSharp;
+using System.Linq;
 using UnityEngine;
 
 public enum Direction { Down, Up, Left, Right } // Add more if needed, e.g., diagonals
@@ -8,6 +10,8 @@ public class ItemHolder : MonoBehaviour
 
 
     [SerializeField] public Transform equippedItem; // Reference to the item's Transform
+
+
     [SerializeField] private Vector2 offsetDown = new Vector2(0.5f, 0f); // Example defaults
     [SerializeField] private Vector2 offsetUp = new Vector2(0.5f, 0.5f);
     [SerializeField] private Vector2 offsetLeft = new Vector2(-0.5f, 0f);
@@ -16,7 +20,10 @@ public class ItemHolder : MonoBehaviour
     [SerializeField]
     private Direction currentDirection = Direction.Down; // Track current direction
 
-    public bool equipped = false;
+    public bool equipped = false;    
+
+    SpriteRenderer sr;
+    string item = null;
 
     private void OnDrawGizmosSelected()
     {
@@ -39,28 +46,30 @@ public class ItemHolder : MonoBehaviour
         }        
     }
 
+    private void Awake()
+    {
+        sr = equippedItem.GetComponent<SpriteRenderer>();
+    }
+
     public void SwapEquippedItem(string itemID)
     {
-        if(!itemDB.GetItemByID(itemID))
+        if(string.IsNullOrEmpty(itemID) || !itemDB.GetItemByID(itemID))
         {
-            equippedItem.gameObject.SetActive(false);
+            item = null;
         }
         else
         {
-            equippedItem.gameObject.SetActive(equipped);
-            equippedItem.GetComponent<ItemEntity>().SetItem(itemID);
+            item = itemID;
+            sr.sprite = ItemDatabase.Instance.GetItemByID(item).sprite;
             UpdateHoldPosition(currentDirection); // Reposition based on current direction
-
         }
-
-
-
+        equippedItem.gameObject.SetActive(equipped && !string.IsNullOrEmpty(item));
     }
     
     public void UpdateEquipped(bool isEquipped)
     {
         equipped = isEquipped;
-        equippedItem.gameObject.SetActive(equipped);
+        equippedItem.gameObject.SetActive(equipped && !string.IsNullOrEmpty(item));
     }
 
     // Call this when direction changes (e.g., from input or animator)
@@ -93,4 +102,10 @@ public class ItemHolder : MonoBehaviour
             default: return Vector2.zero;
         }
     }
+
+    public Vector2 WorldHoldPosition()
+    {
+        return transform.position + GetOffsetForDirection().ToVector3();
+    }
 }
+

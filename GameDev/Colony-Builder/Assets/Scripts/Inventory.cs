@@ -37,7 +37,20 @@ public class Inventory : MonoBehaviour
 
     private void OnEnable()
     {
-        items = new StoredItem[capacity];
+        InitList();
+    }
+
+    private void InitList()
+    {
+        var temp = new StoredItem[capacity];
+        if (items != null)
+        {
+            for (int i = 0; i < items.Length && i < capacity; i++)
+            {
+                temp[i] = items[i];
+            }
+        }
+        items = temp;
     }
 
     /// <summary>
@@ -105,8 +118,8 @@ public class Inventory : MonoBehaviour
 
             if (items[slot].count + itemsLeft > max)
             {
+                itemsLeft -= max - items[slot].count;
                 items[slot].count = max;
-                itemsLeft -= max;
                 slot = FindItemSlotWithSpaceOrEmpty(itemID);
             }
             else
@@ -122,11 +135,11 @@ public class Inventory : MonoBehaviour
     }
 
 
-    public string RemoveItem(int index)
+    public string RemoveStack(int index)
     {
         if (index >= capacity || index < 0)
         {
-            Debug.LogError($"ERROR: Invalid attempt to access inventory (capacity {capacity}) at slot ({index});", gameObject);
+            Logger.LogError($"ERROR: Invalid attempt to access inventory (capacity {capacity}) at slot ({index});", gameObject);
             return null;
         }
 
@@ -139,6 +152,29 @@ public class Inventory : MonoBehaviour
         }
         OnInventoryChanged?.Invoke();
         return storeditem?.itemID;
+    }
+
+    public string RemoveItem(int index)
+    {
+        if (index >= capacity || index < 0)
+        {
+            Logger.LogError($"ERROR: Invalid attempt to access inventory (capacity {capacity}) at slot ({index});", gameObject);
+            return null;
+        }
+
+        string itemID = items[index].itemID;
+
+        if (itemID != null)
+        {
+            items[index].count--;
+            if (items[index].count == 0)
+            {
+                items[index].itemID = null;
+                items[index].count = 0;
+            }    
+        }
+        OnInventoryChanged?.Invoke();
+        return itemID;
     }
 
     public bool HasItem(string itemID)
@@ -154,7 +190,7 @@ public class Inventory : MonoBehaviour
     {
         for (int i = 0; i < capacity; i++)
         {
-            if (items[i].itemID == null)
+            if (IsSlotEmpty(i))
             {
                 return i;
             }
@@ -212,18 +248,29 @@ public class Inventory : MonoBehaviour
     {
         if (index >= capacity || index < 0)
         {
-            Debug.LogError($"ERROR: Invalid attempt to access inventory (capacity {capacity}) at slot ({index});", gameObject);
+            Logger.LogError($"ERROR: Invalid attempt to access inventory (capacity {capacity}) at slot ({index});", gameObject);
             return false;
         }
 
-        return items[index].itemID == null;
+        return items[index].itemID == null || items[index].itemID == "";
+    }
+
+    public string ReadSlot(int index)
+    {
+        if (index >= capacity || index < 0)
+        {
+            Logger.LogError($"ERROR: Invalid attempt to access inventory (capacity {capacity}) at slot ({index});", gameObject);
+            return null;
+        }
+
+        return items[index].itemID;
     }
 
     public int CapacityLeft(int index)
     {
         if (index >= capacity || index < 0)
         {
-            Debug.LogError($"ERROR: Invalid attempt to access inventory (capacity {capacity}) at slot ({index});", gameObject);
+            Logger.LogError($"ERROR: Invalid attempt to access inventory (capacity {capacity}) at slot ({index});", gameObject);
             return 0;
         }
 

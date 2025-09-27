@@ -15,4 +15,4 @@ MonoBehaviour:
   itemID: Axe
   itemName: Axe
   sprite: {fileID: -5825250732961213246, guid: 91cd7bf203046d34c96cacdf744af81f, type: 3}
-  maxStackSize: 99
+  maxStackSize: 1

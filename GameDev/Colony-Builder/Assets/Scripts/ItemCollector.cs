@@ -19,17 +19,20 @@ public class ItemCollector : MonoBehaviour
         }
     }
 
+    float CheckForItem = 0;
     // Collect Item when Collided With
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        Debug.Log("Collecting Item");
-       
         var item = collision.gameObject.GetComponent<ItemEntity>();
-        if (item)
+        if (item && item.CanPickUp())
         {
             if (inventory.AddItem(item.item.itemID, 1) == 1)
             {
                 Destroy(collision.gameObject);
+            }
+            else
+            {
+                Logger.LogError("Something went wrong inserting the ITEM!", gameObject);
             }
         }
     }

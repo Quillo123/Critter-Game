@@ -11,6 +11,8 @@ public class ItemEntity : MonoBehaviour
     public Item item;
     private SpriteRenderer spriteRenderer;
 
+    private float pickupTime = 0;
+
     void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -24,6 +26,16 @@ public class ItemEntity : MonoBehaviour
     {
         item = itemDB.GetItemByID(itemID);
         spriteRenderer.sprite = item.sprite;
+    }
+
+    public void SetCooldown(float cooldown)
+    {
+        pickupTime = Time.time + cooldown;
+    }
+
+    public bool CanPickUp()
+    {
+        return Time.time > pickupTime;
     }
 
     //void OnTriggerEnter2D(Collider2D other)

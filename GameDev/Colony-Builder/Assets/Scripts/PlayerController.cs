@@ -36,14 +36,14 @@ public class PlayerController : MonoBehaviour
 
     public Inventory inventory;
     private int i_item = 0;
-    bool equipped = false;
+    public bool equipped = false;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         if (sr == null)
         {
-            Debug.LogError("SpriteRenderer component is missing on the player GameObject.");
+            Logger.LogError("SpriteRenderer component is missing on the player GameObject.", gameObject);
         }
 
         rb.gravityScale = 0f;
@@ -57,8 +57,6 @@ public class PlayerController : MonoBehaviour
         }
 
         itemHolder = GetComponent<ItemHolder>();
-        inventory = GetComponent<Inventory>();
-
     }
 
     private void Update()

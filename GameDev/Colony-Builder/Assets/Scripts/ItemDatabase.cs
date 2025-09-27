@@ -40,7 +40,7 @@ public class ItemDatabase : MonoBehaviour
         itemPrefab = Resources.Load<ItemEntity>("Prefabs/Item");
         if(itemPrefab == null)
         {
-            Debug.LogError($"Could not load default item prefab.");
+            Logger.LogError($"Could not load default item prefab.", gameObject);
             return;
         }
     }
@@ -64,13 +64,13 @@ public class ItemDatabase : MonoBehaviour
 
         if (duplicateIDs.Count > 0)
         {
-            Debug.LogError($"Duplicate item IDs found: {string.Join(", ", duplicateIDs)}. Each Item must have a unique itemID.");
+            Logger.LogError($"Duplicate item IDs found: {string.Join(", ", duplicateIDs)}. Each Item must have a unique itemID.", gameObject);
             return;
         }
 
         if (invalidIDs.Count > 0)
         {
-            Debug.LogError($"Invalid (null or empty) item IDs found in assets: {string.Join(", ", invalidIDs)}. Each Item must have a valid itemID.");
+            Logger.LogError($"Invalid (null or empty) item IDs found in assets: {string.Join(", ", invalidIDs)}. Each Item must have a valid itemID.", gameObject);
             return;
         }
 
@@ -80,14 +80,14 @@ public class ItemDatabase : MonoBehaviour
             items.Add(item.itemID, item);
         }
 
-        Debug.Log($"Loaded {items.Count} items from Resources/Items with unique IDs.");
+        Logger.Log($"Loaded {items.Count} items.", gameObject);
     }
 
     public Item GetItemByID(string itemID)
     {
         if (string.IsNullOrEmpty(itemID))
         {
-            Debug.LogWarning("GetItemByID called with null or empty itemID.");
+            Logger.LogWarning("GetItemByID called with null or empty itemID.", gameObject);
             return null;
         }
 
@@ -98,7 +98,7 @@ public class ItemDatabase : MonoBehaviour
     {
         if (string.IsNullOrEmpty(itemName))
         {
-            Debug.LogWarning("GetItemByName called with null or empty itemName.");
+            Logger.LogWarning("GetItemByName called with null or empty itemName.", gameObject);
             return null;
         }
 

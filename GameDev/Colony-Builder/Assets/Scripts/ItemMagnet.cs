@@ -8,9 +8,12 @@ public class ItemMagnet : MonoBehaviour
     [Range(0.01f, 2f)]
     public float minDistance = 0.1f;
 
+    public bool IsPickupMagnet = true;
+
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if(collision.GetComponent<ItemEntity>())
+        var item = collision.GetComponent<ItemEntity>();
+        if (item && (!IsPickupMagnet || item.CanPickUp()))
         {
             Vector2 dir = transform.position - collision.transform.position;
             float distance = dir.magnitude;
