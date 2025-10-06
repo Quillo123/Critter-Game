@@ -67,8 +67,14 @@ public class Resource : MonoBehaviour
     { 
         if(Input.GetMouseButton(0) && !destroying)
         {
+            sr.sharedMaterial = defaultMat;
+
             if(startTime == 0) startTime = Time.time;
-            if(Time.time - startTime >= breakTime)
+
+            var elapsedTime = Time.time - startTime;
+
+            sr.material.SetFloat("_Radius", elapsedTime / breakTime);
+            if (elapsedTime >= breakTime)
             {
                 StartCoroutine(DropItemsAndDestroy());
             }

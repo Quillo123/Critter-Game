@@ -58,7 +58,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 757b5dca1f82bcf428db1593c0c4ad45, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -113,7 +113,7 @@ MonoBehaviour:
   spawnOffset: {x: 0, y: 0.64}
   spawnForce: 500
   fadeDuration: 1.5
-  defaultMat: {fileID: 0}
+  defaultMat: {fileID: 2100000, guid: 757b5dca1f82bcf428db1593c0c4ad45, type: 2}
   highlight: {fileID: 2100000, guid: 3bd6ff5c6c1e1524d9e3d362b3124667, type: 2}
   dissolve: {fileID: 2100000, guid: 413e46c2ab258a544a48318d19fe0fb1, type: 2}
 --- !u!61 &2943050513626338070
