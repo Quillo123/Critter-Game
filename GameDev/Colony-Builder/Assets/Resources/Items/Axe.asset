@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72ea84bfc6b3d1d4fb24c3345e0c7821, type: 3}
+  m_Name: Axe
+  m_EditorClassIdentifier: 
+  itemID: Axe
+  itemName: Axe
+  sprite: {fileID: -5825250732961213246, guid: 91cd7bf203046d34c96cacdf744af81f, type: 3}
+  maxStackSize: 1

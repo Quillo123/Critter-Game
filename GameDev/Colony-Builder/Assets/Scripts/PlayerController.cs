@@ -3,7 +3,6 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(ItemHolder))]
-[RequireComponent(typeof(Inventory))]
 public class PlayerController : MonoBehaviour
 {
     public float speed = 5;
@@ -35,16 +34,16 @@ public class PlayerController : MonoBehaviour
     private bool dashInput;
     private Vector2 facingDir = Vector2.down; // Default facing forward (down)
 
-    private Inventory inventory;
+    public Inventory inventory;
     private int i_item = 0;
-    bool equipped = false;
+    public bool equipped = false;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         if (sr == null)
         {
-            Debug.LogError("SpriteRenderer component is missing on the player GameObject.");
+            Logger.LogError("SpriteRenderer component is missing on the player GameObject.", gameObject);
         }
 
         rb.gravityScale = 0f;
@@ -58,8 +57,6 @@ public class PlayerController : MonoBehaviour
         }
 
         itemHolder = GetComponent<ItemHolder>();
-        inventory = GetComponent<Inventory>();
-
     }
 
     private void Update()
@@ -84,25 +81,25 @@ public class PlayerController : MonoBehaviour
         }
 
         // Swap items using scroll wheel
-        if(Input.mouseScrollDelta.y != 0 && inventory.items.Count > 0)
+        if(Input.mouseScrollDelta.y != 0 && inventory.items.Length > 0)
         {
             if (Input.mouseScrollDelta.y > 0)
             {
                 i_item--;
                 if (i_item < 0)
                 {
-                    i_item = inventory.items.Count - 1;
+                    i_item = inventory.items.Length - 1;
                 }
             }
             else
             {
                 i_item++;
-                if (i_item == inventory.items.Count)
+                if (i_item == inventory.items.Length)
                 {
                     i_item = 0;
                 }
             }
-            SwapHeldItem(inventory.items[i_item]);
+            SwapHeldItem(inventory.items[i_item].itemID);
         }
 
 
@@ -183,12 +180,10 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    private void SwapHeldItem(ItemEntity item)
+    private void SwapHeldItem(string itemID)
     {
-        if (inventory.HasItem(item))
-        {
-            itemHolder.SwapEquippedItem(item);
-        }
+
+        itemHolder.SwapEquippedItem(itemID);
     }
 
 
