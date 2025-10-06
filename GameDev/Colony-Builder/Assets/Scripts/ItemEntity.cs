@@ -22,6 +22,11 @@ public class ItemEntity : MonoBehaviour
         rb.freezeRotation = true;
     }
 
+    private void Start()
+    {
+        spriteRenderer.sprite = item.sprite;
+    }
+
     public void SetItem(string itemID)
     {
         item = itemDB.GetItemByID(itemID);
